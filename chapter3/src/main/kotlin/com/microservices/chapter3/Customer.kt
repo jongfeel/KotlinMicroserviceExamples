@@ -1,4 +1,3 @@
 package com.microservices.chapter3
 
-class Customer {
-}
+data class Customer(var id: Int = 0, var name: String = "")
