@@ -17,8 +17,9 @@ class CustomerController {
     }
 
     @PostMapping(value = ["/customer"])
-    fun createCustomer(@RequestBody customer: Customer) {
+    fun createCustomer(@RequestBody customer: Customer) : ResponseEntity<Unit> {
         customerService.createCustomer(customer)
+        return ResponseEntity(Unit, HttpStatus.CREATED)
     }
 
     @DeleteMapping(value = ["/customer/{id}"])
