@@ -1,41 +1,29 @@
 package com.microservices.chapter3
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
-import java.util.concurrent.ConcurrentHashMap
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class CustomerController {
     @Autowired
-    lateinit var customers : ConcurrentHashMap<Int, Customer>
-    @RequestMapping(value = ["/customer/{id}"], method = [RequestMethod.GET])
-    fun getCustomer(@PathVariable id: Int) = customers[id]
+    private lateinit var customerService : CustomerService
+    @GetMapping(value = ["/customer/{id}"])
+    fun getCustomer(@PathVariable id: Int) = customerService.getCustomer(id)
 
-    @RequestMapping(value = ["/customer"], method = [RequestMethod.POST])
+    @PostMapping(value = ["/customer"])
     fun createCustomer(@RequestBody customer: Customer) {
-        this.customers[customer.id] = customer
+        customerService.createCustomer(customer)
     }
 
-    @RequestMapping(value = ["/customer/{id}"], method = [RequestMethod.DELETE])
-    fun deleteCustomer(@PathVariable id: Int) = customers.remove(id)
+    @DeleteMapping(value = ["/customer/{id}"])
+    fun deleteCustomer(@PathVariable id: Int) = customerService.deleteCustomer(id)
 
-    @RequestMapping(value = ["/customer/{id}"], method = [RequestMethod.PUT])
+    @PutMapping(value = ["/customer/{id}"])
     fun updateCustomer(@PathVariable id: Int, @RequestBody customer: Customer) {
-        customers.remove(id)
-        this.customers[customer.id] = customer
+        customerService.updateCustomer(id, customer)
     }
 
-    @RequestMapping(value = ["/customers"], method = [RequestMethod.GET])
-    fun getCustomers(
-        @RequestParam(required = false, defaultValue = "")
-        nameFilter: String) =
-        customers
-        .filter { it.value.name.contains(nameFilter, true) }
-        .map(Map.Entry<Int, Customer>::value)
-        .toList()
+    @GetMapping(value = ["/customers"])
+    fun getCustomers(@RequestParam(required = false, defaultValue = "") nameFilter: String) =
+        customerService.searchCustomers(nameFilter)
 }
