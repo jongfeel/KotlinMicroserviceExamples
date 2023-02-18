@@ -21,6 +21,9 @@ class CustomerController {
         this.customers[customer.id] = customer
     }
 
+    @RequestMapping(value = ["/customer/{id}"], method = [RequestMethod.DELETE])
+    fun deleteCustomer(@PathVariable id: Int) = customers.remove(id)
+
     @RequestMapping(value = ["/customers"], method = [RequestMethod.GET])
     fun getCustomers(
         @RequestParam(required = false, defaultValue = "")
