@@ -17,7 +17,7 @@ class CustomerServiceImpl : CustomerService {
     }
 
     private val customers = ConcurrentHashMap<Int, Customer>(initialCustomers.associateBy(Customer::id))
-    override fun getCustomer(id: Int) = customers[id]?.toMono()
+    override fun getCustomer(id: Int) = customers[id]?.toMono() ?: Mono.empty()
 
     override fun searchCustomers(nameFilter: String) =
         customers.filter {
