@@ -1,4 +1,5 @@
 package com.microservices.chapter5
 
-interface CustomerRepository {
-}
+import org.springframework.data.repository.reactive.ReactiveCrudRepository
+
+interface CustomerRepository : ReactiveCrudRepository<Customer, Int>
