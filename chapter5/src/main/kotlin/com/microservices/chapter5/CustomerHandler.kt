@@ -19,4 +19,8 @@ class CustomerHandler(val customerService: CustomerService) {
     fun create(serverRequest: ServerRequest) =
         customerService.createCustomer(serverRequest.bodyToMono())
             .flatMap { created(URI.create(("/customer/${it.id}"))).build() }
+
+    fun delete(serverRequest: ServerRequest) =
+        customerService.deleteCustomer(serverRequest.pathVariable("id").toInt())
+            .flatMap { if (it) ok().build() else status(HttpStatus.NOT_FOUND).build() }
 }
