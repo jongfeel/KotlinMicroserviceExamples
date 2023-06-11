@@ -2,6 +2,7 @@ package com.microservices.chapter5
 
 import jakarta.annotation.PostConstruct
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
+import org.springframework.data.mongodb.core.find
 import org.springframework.data.mongodb.core.findById
 import org.springframework.data.mongodb.core.query.Criteria.where
 import org.springframework.data.mongodb.core.query.Query
@@ -25,4 +26,5 @@ class CustomerRepository(private val template: ReactiveMongoTemplate) {
     fun create(customer: Mono<Customer>) = template.save(customer)
     fun findById(id: Int) = template.findById<Customer>(id)
     fun deleteById(id: Int) = template.remove<Customer>(Query(where("_id").isEqualTo(id)))
+    fun findCustomer(nameFilter: String) = template.find<Customer>(Query(where("name").regex(".*$nameFilter.*", "i")))
 }
