@@ -1,0 +1,15 @@
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: health, metrics, httpexchanges
+  endpoint:
+    health:
+      show-details: always
+  server:
+    port: 8089
+
+spring:
+  jmx:
+    enabled: true

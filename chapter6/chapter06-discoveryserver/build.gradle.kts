@@ -7,7 +7,7 @@ plugins {
 	kotlin("plugin.spring") version "1.8.22"
 }
 
-group = "com.microservices"
+group = "com.microservice"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -21,16 +21,9 @@ repositories {
 extra["springCloudVersion"] = "2022.0.3"
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-webflux")
-	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-	implementation("org.springframework.cloud:spring-cloud-starter-config")
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("io.projectreactor:reactor-test")
 }
 
 dependencyManagement {

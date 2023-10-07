@@ -3,3 +3,9 @@ spring:
     import: optional:configserver:http://localhost:8888
   application:
     name: "greetings"
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+server:
+  port: 0
